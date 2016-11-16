@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosandjelic.soundbuttonsmaven.FXMLMainSceneController">
+   <center>
+      <FlowPane fx:id="flowPane" hgap="10.0" prefHeight="300.0" prefWidth="600.0" vgap="10.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin></FlowPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="2.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar prefWidth="400.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem fx:id="openSoundRecorder" mnemonicParsing="false" text="Open Sound Recorder" />
+                        <MenuItem fx:id="openFiles" mnemonicParsing="false" text="Open Files" />
+                        <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem fx:id="deleteSomething" mnemonicParsing="false" text="Delete Something" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                        <MenuItem fx:id="tutorial" mnemonicParsing="false" text="Tutorial" />
+                    <MenuItem fx:id="about" mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <CheckBox fx:id="stopCurrentBeforeNext" mnemonicParsing="false" text="Stop current before next">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </CheckBox>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
