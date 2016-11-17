@@ -19,7 +19,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="2.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar prefWidth="400.0">
+            <MenuBar prefHeight="25.0" prefWidth="132.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
@@ -30,7 +30,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem fx:id="deleteSomething" mnemonicParsing="false" text="Delete Something" />
+                    <MenuItem fx:id="deleteAllSounds" mnemonicParsing="false" text="Delete all sounds" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

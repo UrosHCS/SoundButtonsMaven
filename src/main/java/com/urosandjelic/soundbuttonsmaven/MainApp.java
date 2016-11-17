@@ -20,12 +20,13 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("Sound Buttons");
         stage.setScene(scene);
         stage.show();
 
         stage.setOnCloseRequest(
                 (e) -> {
+                    //If Sound recorder is open (visible) alert the user
                     if (StageHelper.getStages().size() > 1) {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("Sound Recorder is open!");

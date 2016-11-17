@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosandjelic.soundrecorder.FXMLsoundRecorderController">
+   <top>
+      <HBox prefHeight="40.0" prefWidth="400.0">
+         <children>
+            <Label text="Sound Name">
+               <padding>
+                  <Insets bottom="4.0" left="1.0" right="1.0" top="4.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="nameField" prefHeight="25.0" prefWidth="295.0" text="1" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <left>
+      <ScrollPane prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+         <content>
+            <TableView fx:id="soundsTable" editable="true" prefHeight="200.0">
+              <columns>
+                  <TableColumn fx:id="columnNumber" editable="false" prefWidth="30.0" resizable="false" sortable="false" text="#" />
+                <TableColumn fx:id="columnSound" maxWidth="140.0" minWidth="100.0" prefWidth="140.0" resizable="false" sortable="false" text="Sound name" />
+                  <TableColumn fx:id="columnSelect" prefWidth="62.0" resizable="false" sortable="false" text="Select" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </left>
+   <right>
+      <VBox alignment="TOP_CENTER" prefHeight="155.0" prefWidth="250.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="194.0">
+               <children>
+                  <Button fx:id="btnRec" mnemonicParsing="false">
+                     <graphic>
+                        <Circle fill="#ff1f1f" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                <Button fx:id="btnPlay" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="12.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnStop" alignment="CENTER" mnemonicParsing="false">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="194.0">
+               <children>
+                  <Button fx:id="btnSaveSelected" mnemonicParsing="false" prefWidth="150.0" text="Save Selected">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin></Button>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnDeleteSelected" mnemonicParsing="false" prefWidth="150.0" text="Delete Selected">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>
