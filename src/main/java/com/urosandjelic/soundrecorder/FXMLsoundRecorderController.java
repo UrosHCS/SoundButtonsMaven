@@ -8,6 +8,7 @@ package com.urosandjelic.soundrecorder;
 import com.urosandjelic.alert.ErrorAlertGenerator;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -95,6 +96,7 @@ public class FXMLsoundRecorderController implements Initializable {
         columnNumber.setCellValueFactory(column
                 -> new ReadOnlyObjectWrapper<>(soundsTable.getItems().indexOf(
                         column.getValue()) + 1));
+        //this is the sound name column
         columnSound.setCellValueFactory(new PropertyValueFactory<>("title"));
 
         //columnSelect has a checkbox for selecting sounds to save or delete
@@ -105,12 +107,17 @@ public class FXMLsoundRecorderController implements Initializable {
 
         //BUTTONS START HERE
         btnRec.setOnAction((e) -> {
-            Runnable recordSound = () -> {
-                sr.recordSound(); //start recording sound
-            };
-            recordingSound = true; //sound is being recorded
-            stopButtonEnabled(true); //set buttons accordingly
-            new Thread(recordSound).start();
+            if (nameField.getText().equals("")) {
+                ErrorAlertGenerator.generate("Name field can't be empty",
+                        "Please enter a name for your recording.");
+            } else {
+                Runnable recordSound = () -> {
+                    sr.recordSound(); //start recording sound
+                };
+                recordingSound = true; //sound is being recorded
+                stopButtonEnabled(true); //set buttons accordingly
+                new Thread(recordSound).start();
+            }
         }
         );
 
@@ -122,6 +129,7 @@ public class FXMLsoundRecorderController implements Initializable {
                         recList.add(new Sound(nameField.getText(), sr.getBytes()));
                         soundsTable.getSelectionModel().selectLast();
                         recordingSound = false;
+                        iterateNameField();
                     }
                 }
         );
@@ -205,5 +213,31 @@ public class FXMLsoundRecorderController implements Initializable {
         alert.setHeaderText(text1);
         alert.setContentText(text2);
         alert.showAndWait();
+    }
+
+    private void iterateNameField() {
+        String name = nameField.getText();
+
+        //If name is a single char, iterate the char
+        if (name.length() == 1) {
+            char c = name.charAt(0);
+            nameField.setText(String.valueOf(++c));
+            //else if name ends with (x), iterate x
+        } else if (name.endsWith(")")) {
+            //Split the name at parenthesis
+            String[] parts = name.split("[\\(\\)]");
+            try {
+                //Increment the number between the last two parenthesis
+                int num = 1 + Integer.parseInt(parts[parts.length - 1]);
+                //Construct a new name and put it in the name field
+                int numPosition = name.lastIndexOf("(");
+                String newName = name.substring(0, numPosition + 1) + num + ")";
+                nameField.setText(newName);
+            } catch (NumberFormatException nfe) {
+            }
+            //else just add " (1)" to the end of the name
+        } else {
+            nameField.setText(name + " (1)");
+        }
     }
 }
