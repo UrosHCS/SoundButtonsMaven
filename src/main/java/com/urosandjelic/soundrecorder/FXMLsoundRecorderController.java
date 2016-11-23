@@ -152,7 +152,7 @@ public class FXMLsoundRecorderController implements Initializable {
                 }
         );
         soundsTable.setOnMouseClicked((e) -> {
-            if (e.getButton().equals(MouseButton.PRIMARY)) {
+            if (!recList.isEmpty() && e.getButton().equals(MouseButton.PRIMARY)) {
                 if (e.getClickCount() == 2) {
                     new Thread(playSound).start();
                 }
