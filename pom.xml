@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>SoundButtonsMaven</name>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>com.urosandjelic.soundbuttonsmaven.MainApp</mainClass>

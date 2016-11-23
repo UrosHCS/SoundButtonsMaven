@@ -25,7 +25,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="nameField" prefHeight="25.0" prefWidth="295.0" text="1" />
+            <TextField fx:id="nameField" prefHeight="25.0" prefWidth="246.0" text="1" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -58,21 +58,21 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                <Button fx:id="btnPlay" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false">
-                     <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="12.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="btnStop" alignment="CENTER" mnemonicParsing="false">
                      <graphic>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="12.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
                      </graphic>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="10.0" right="10.0" />
                      </HBox.margin></Button>
+                <Button fx:id="btnPlay" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false">
+                     <graphic>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="12.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="194.0">

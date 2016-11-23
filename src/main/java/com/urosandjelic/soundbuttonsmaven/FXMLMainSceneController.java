@@ -59,7 +59,9 @@ public class FXMLMainSceneController implements Initializable {
             //Cause we need only one sound recorder stage:
             if (soundRecorderStage == null) {
                 soundRecorderStage = new Stage();
-                soundRecorderStage.setScene(new Scene(root1));
+                Scene scene = new Scene(root1);
+                scene.getStylesheets().add("/styles/Styles.css");
+                soundRecorderStage.setScene(scene);
                 soundRecorderStage.show();
             } else {
                 soundRecorderStage.show();
@@ -86,23 +88,24 @@ public class FXMLMainSceneController implements Initializable {
 
             List<File> listOfFiles = fileChooser.showOpenMultipleDialog(
                     flowPane.getScene().getWindow());
-
-            for (File file : listOfFiles) {
-                try {
-                    SoundButton sbtn = new SoundButton(file);
-                    flowPane.getChildren().add(sbtn);
-                    sbtn.setOnAction((e) -> {
-                        //This controler keeps a reference of the last clicked sound button.
-                        //If stopCurrentBeforeNext is selected that sound button is stopped
-                        //before the next one is played.
-                        if (soundButton != null && stopCurrentBeforeNext.isSelected()) {
-                            this.soundButton.stopWAVFile();
-                        }
-                        this.soundButton = sbtn;
-                        sbtn.playWAVFile();
-                    });
-                } catch (MalformedURLException ex) {
-                    ErrorAlertGenerator.generate("Some problem with URL", ex.toString());
+            if (listOfFiles != null) {
+                for (File file : listOfFiles) {
+                    try {
+                        SoundButton sbtn = new SoundButton(file);
+                        flowPane.getChildren().add(sbtn);
+                        sbtn.setOnAction((e) -> {
+                            //This controler keeps a reference of the last clicked sound button.
+                            //If stopCurrentBeforeNext is selected that sound button is stopped
+                            //before the next one is played.
+                            if (soundButton != null && stopCurrentBeforeNext.isSelected()) {
+                                this.soundButton.stopWAVFile();
+                            }
+                            this.soundButton = sbtn;
+                            sbtn.playWAVFile();
+                        });
+                    } catch (MalformedURLException ex) {
+                        ErrorAlertGenerator.generate("Some problem with URL", ex.toString());
+                    }
                 }
             }
         });
@@ -133,7 +136,7 @@ public class FXMLMainSceneController implements Initializable {
                     aboutStage.close();
                 });
                 vBox.getChildren().add(btnOK);
-                
+
                 aboutStage = new Stage();
                 aboutStage.setScene(new Scene(vBox));
                 aboutStage.show();

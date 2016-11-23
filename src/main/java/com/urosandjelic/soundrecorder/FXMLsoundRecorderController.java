@@ -64,17 +64,24 @@ public class FXMLsoundRecorderController implements Initializable {
     }
 
     //gets the sound from the selected sound from the table
-    public byte[] getSelectedSound() {
+    private byte[] getSelectedSound() {
         return soundsTable.getSelectionModel().getSelectedItem().getByteArray();
     }
 
     //true enables only stop button, false enables play and rec
-    public void stopButtonEnabled(boolean yes) {
+    private void stopButtonEnabled(boolean yes) {
         btnRec.setDisable(yes);
         btnPlay.setDisable(yes);
         btnStop.setDisable(!yes);
         //disable double click on the table
         soundsTable.setDisable(yes); //not a perfect solution
+    }
+    
+    //On initialization or when the recList is empty
+    private void setInitialButtonConditions() {
+        this.btnRec.setDisable(false);
+        this.btnStop.setDisable(true);
+        this.btnPlay.setDisable(true);
     }
 
     /**
@@ -87,9 +94,7 @@ public class FXMLsoundRecorderController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         SoundRecorder sr = SoundRecorder.getInstance();
-
-        this.btnStop.setDisable(true);
-        this.btnPlay.setDisable(true);
+        setInitialButtonConditions();
         //SET THE TABLE
         //this is the numbering column
         columnNumber.setCellValueFactory(column
@@ -196,6 +201,10 @@ public class FXMLsoundRecorderController implements Initializable {
                                 if (next.getIsSelected().get()) {
                                     it.remove();
                                 }
+                            }
+                            //if the list is now empty, setup buttons accordingly
+                            if (recList.isEmpty()) {
+                                setInitialButtonConditions();
                             }
                         }
                     } else {

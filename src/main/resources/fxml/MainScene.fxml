@@ -19,7 +19,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="2.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="132.0">
+            <MenuBar prefHeight="25.0" prefWidth="264.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
