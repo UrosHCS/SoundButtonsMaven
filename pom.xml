@@ -11,7 +11,7 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.urosandjelic.soundbuttonsmaven.MainApp</mainClass>
+        <mainClass>com.urosandjelic.soundbuttonsmaven.Main</mainClass>
     </properties>
 
     <organization>

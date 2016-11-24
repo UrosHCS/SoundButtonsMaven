@@ -131,12 +131,11 @@ public class SoundRecorder {
         }
     }
 
-    public void saveByteArrayToWAVFile(byte[] b, String path)
-            throws UnsupportedAudioFileException, IOException {
+    public void saveByteArrayToWAVFile(byte[] b, File path) throws IOException {
 
         AudioInputStream ais = new AudioInputStream(
                 new ByteArrayInputStream(b), format, b.length);
 
-        AudioSystem.write(ais, AudioFileFormat.Type.WAVE, new File(path));
+        AudioSystem.write(ais, AudioFileFormat.Type.WAVE, path);
     }
 }

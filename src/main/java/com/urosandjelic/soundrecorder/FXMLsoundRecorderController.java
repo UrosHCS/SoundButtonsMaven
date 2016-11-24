@@ -6,11 +6,15 @@
 package com.urosandjelic.soundrecorder;
 
 import com.urosandjelic.alert.ErrorAlertGenerator;
+import com.urosandjelic.soundbuttonsmaven.Main;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javafx.stage.DirectoryChooser;
 
 /**
  * FXML Controller class
@@ -76,7 +80,7 @@ public class FXMLsoundRecorderController implements Initializable {
         //disable double click on the table
         soundsTable.setDisable(yes); //not a perfect solution
     }
-    
+
     //On initialization or when the recList is empty
     private void setInitialButtonConditions() {
         this.btnRec.setDisable(false);
@@ -133,7 +137,7 @@ public class FXMLsoundRecorderController implements Initializable {
                         recList.add(new Sound(nameField.getText(), sr.getBytes()));
                         soundsTable.getSelectionModel().selectLast();
                         recordingSound = false;
-                        iterateNameField();
+                        iterateNameTextField();
                     }
                 }
         );
@@ -161,34 +165,66 @@ public class FXMLsoundRecorderController implements Initializable {
         }
         );
 
-        btnSaveSelected.setOnAction(
-                (e) -> {
-                    if (!recList.isEmpty()) {
-                        try {
-                            for (int i = 0; i < recList.size(); i++) {
-                                if (columnSelect.getCellData(i)) {
-                                    System.out.printf("Row %d is checked!\n", i);
-                                    String filePath = recList.get(i).getTitle() + ".wav";
-                                    sr.saveByteArrayToWAVFile(recList.get(i).getByteArray(), filePath);
-                                }
-                            }
-                        } catch (IOException ioe) {
-                            ErrorAlertGenerator.generate(
-                                    "Couldn't save byte array to wav", ioe.toString());
-                        } catch (UnsupportedAudioFileException uafe) {
-                            ErrorAlertGenerator.generate(
-                                    "Couldn't save byte array to wav", uafe.toString());
-                        }
-                    } else {
-                        awesomeAlert("There are no recordings!",
-                                "Make a recording, then save it.");
+        btnSaveSelected.setOnAction((e) -> {
+            Boolean thereIsSomethingToSave = null;
+            //First check if there are any recordings
+            if (!recList.isEmpty()) {
+                thereIsSomethingToSave = false;
+                //then check if there are any selected rows
+                for (int i = 0; i < recList.size(); i++) {
+                    if (columnSelect.getCellData(i)) {
+                        thereIsSomethingToSave = true; //true = something is selected
+                        break;
                     }
-                });
+                }
+            }
+            //Now we can act acording to the thereIsSomethingToSave state
+            //null = list is empty
+            if (thereIsSomethingToSave == null) {
+                awesomeAlert("There are no recordings!",
+                        "Make a recording, then save it.");
+
+                //false = list not empty but nothing is selected
+            } else if (!thereIsSomethingToSave) {
+                awesomeAlert("No recording is selected!",
+                        "Select recordings you want to save.");
+            } else {
+                //If we are here that means something IS selected
+
+                //Chose your destination:
+                DirectoryChooser dirChooser = new DirectoryChooser();
+                dirChooser.setTitle("Choose location to save sounds.");
+                dirChooser.setInitialDirectory(Main.jarFilePath.getParentFile());
+                //Choose a folder and make a string from it. File name has to be added later
+                String dirPath = dirChooser.showDialog(nameField.getScene().getWindow()).getPath();
+
+                //Save selected sounds to the chosen location
+                try {
+                    for (int i = 0; i < recList.size(); i++) {
+                        if (columnSelect.getCellData(i)) {
+                            //Take the folder path and add a file name
+                            String filePath = dirPath + "\\" + recList.get(i).getTitle() + ".wav";
+                            //Make a file with the right path
+                            File file = new File(filePath);
+                            sr.saveByteArrayToWAVFile(recList.get(i).getByteArray(), file);
+                        }
+                    }
+                    awesomeAlert("Sound(s) saved!", "Saved at: " + dirPath + "\\*");
+                } catch (IOException ex) {
+                    ErrorAlertGenerator.generate(
+                            " IO problem with saving byte array to wav", ex.toString());
+                }
+            }
+
+        });
 
         btnDeleteSelected.setOnAction(
                 (e) -> {
                     //
-                    if (!recList.isEmpty()) {
+                    if (recList.isEmpty()) {
+                        awesomeAlert("There are no recordings!",
+                                "You can't delete something that doesn't exist...");
+                    } else {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setTitle("");
                         alert.setHeaderText("Are you sure you want to delete selected sounds?");
@@ -207,9 +243,7 @@ public class FXMLsoundRecorderController implements Initializable {
                                 setInitialButtonConditions();
                             }
                         }
-                    } else {
-                        awesomeAlert("There are no recordings!",
-                                "You can't delete something that doesn't exist...");
+
                     }
                 });
 
@@ -223,7 +257,7 @@ public class FXMLsoundRecorderController implements Initializable {
         alert.showAndWait();
     }
 
-    private void iterateNameField() {
+    private void iterateNameTextField() {
         String name = nameField.getText();
 
         //If name is a single char, iterate the char
@@ -242,6 +276,7 @@ public class FXMLsoundRecorderController implements Initializable {
                 String newName = name.substring(0, numPosition + 1) + num + ")";
                 nameField.setText(newName);
             } catch (NumberFormatException nfe) {
+                //Nothing to handle, just "Let it GOOOO, let it go!"
             }
             //else just add " (1)" to the end of the name
         } else {

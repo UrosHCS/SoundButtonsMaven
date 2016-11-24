@@ -88,6 +88,7 @@ public class FXMLMainSceneController implements Initializable {
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open some sounds.");
+            fileChooser.setInitialDirectory(Main.jarFilePath.getParentFile());
             fileChooser.setSelectedExtensionFilter(
                     new FileChooser.ExtensionFilter("WAV files (*.wav)", "*.wav"));
 
